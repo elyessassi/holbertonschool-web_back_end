@@ -8,9 +8,9 @@ a type-annotated function sum_mixed_list which takes
 from typing import List, Union
 
 
-def sum_mixed_list(input_list: List[Union[float, int]]) -> float:
+def sum_mixed_list(mxd_lst: List[Union[float, int]]) -> float:
     """the function"""
     x: float = 0
-    for i in input_list:
+    for i in mxd_lst:
         x += i
     return (x)

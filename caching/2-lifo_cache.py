@@ -25,7 +25,7 @@ class LIFOCache(BaseCaching):
 
     def get(self, key):
         """ displays an item of a certain key"""
-        if (key is not None or key not in self.cache_data):
+        if (key is None or key not in self.cache_data):
             return (None)
         else:
             return (self.cache_data[key])

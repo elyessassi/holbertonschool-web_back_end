@@ -15,17 +15,13 @@ class LRUCache(BaseCaching):
     def put(self, key, item):
         """ adding an item """
         if (key is not None and item is not None):
-            if (key in self.cache_data):
-                del self.cache_data[key]
-                self.cache_data[key] = item
-        else:
             if (len(self.cache_data) < BaseCaching.MAX_ITEMS):
-                    self.cache_data[key] = item
+                self.cache_data[key] = item
             else:
-                    mylist = list(self.cache_data)
-                    print(f"DISCARD: {mylist[0]}")
-                    del self.cache_data[mylist[0]]
-                    self.cache_data[key] = item
+                mylist = list(self.cache_data)
+                print(f"DISCARD: {mylist[0]}")
+                del self.cache_data[mylist[0]]
+                self.cache_data[key] = item
 
     def get(self, key):
         """ displays an item of a certain key"""

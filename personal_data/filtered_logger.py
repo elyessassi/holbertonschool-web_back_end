@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
-
 """ file that containes function used
 to obstruct the log message and return it """
-
-
 import re
 
 

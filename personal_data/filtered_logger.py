@@ -4,7 +4,8 @@ to obstruct the log message and return it """
 import re
 
 
-def filter_datum(fields: list[str], redaction: str, message: str, separator: str) -> str:
+def filter_datum(fields: list[str], redaction: str,
+                 message: str, separator: str) -> str:
     """ function used to obstruct the log message and return it """
 
     for i in fields:

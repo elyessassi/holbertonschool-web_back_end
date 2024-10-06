@@ -52,3 +52,4 @@ def get_logger() -> logging.Logger:
     myformatter = RedactingFormatter()
     myhandler.setFormatter(myformatter)
     mylogger.addHandler(myhandler)
+    mylogger.propagate = False

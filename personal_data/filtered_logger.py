@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-""" file that containes function used
+""" module that containes functions used
 to obstruct the log message and return it """
 import re
 from typing import List
 import logging
+import mysql.connector
+import os
 
 PII_FIELDS = ("name", "ssn", "password", "phone", "email")
 
@@ -53,3 +55,14 @@ def get_logger() -> logging.Logger:
     myhandler.setFormatter(myformatter)
     mylogger.addHandler(myhandler)
     mylogger.propagate = False
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """ funtion to connect to a database and return
+        the connection object """
+    dbUsername = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    dbHost = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    dbPassword = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    dbOBJ = mysql.connector.connect(host=dbHost, user=dbUsername,
+                                    password=dbPassword, database="my_db")
+    return dbOBJ

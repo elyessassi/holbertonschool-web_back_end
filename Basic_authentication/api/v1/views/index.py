@@ -32,6 +32,7 @@ def no_auth():
     abort(401)
     return
 
+
 @app_views.route('/forbidden', strict_slashes=False)
 def forbidden():
     """forbidden route"""

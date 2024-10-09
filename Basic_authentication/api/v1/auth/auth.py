@@ -6,6 +6,7 @@ from typing import TypeVar
 
 
 class Auth():
+    """ Authentication file"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """ Method to check if accessing a path
         requires authentication """

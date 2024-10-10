@@ -9,7 +9,6 @@ from flask_cors import (CORS, cross_origin)
 import os
 
 
-
 app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
@@ -40,19 +39,19 @@ def forbid(error) -> str:
     """
     return jsonify({"error": "Forbidden"}), 403
 
+
 # Before the request is sent
 @app.before_request
 def beforeRequestf():
     """ methods to run before the request is sent """
     if auth is not None:
-        if auth.require_auth(request.path, ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']):
+        if auth.require_auth(request.path, ['/api/v1/status/',
+                                            '/api/v1/unauthorized/',
+                                            '/api/v1/forbidden/']):
             if auth.authorization_header(request) is None:
                 abort(401)
             if auth.current_user(request) is None:
                 abort(403)
-
-
-
 
 
 if __name__ == "__main__":

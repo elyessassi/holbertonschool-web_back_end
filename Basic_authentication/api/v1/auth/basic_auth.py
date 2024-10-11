@@ -5,6 +5,7 @@ import base64
 import binascii
 from typing import TypeVar
 from models.user import User
+from models.base import DATA
 
 
 class BasicAuth(Auth):
@@ -56,3 +57,22 @@ class BasicAuth(Auth):
             # and after ':'
             return (decoded_base64_authorization_header[:index],
                     decoded_base64_authorization_header[index + 1:])
+
+    def user_object_from_credentials(self, user_email: str,
+                                     user_pwd:
+                                     str) -> TypeVar('User'):
+        if (user_email is None) or (not isinstance(user_email, str)):
+            return None
+        if (user_pwd is None) or (not isinstance(user_pwd, str)):
+            return None
+        if DATA["User"] == {}:
+            return None
+        if not (User.search({"email": f"{user_email}"})):
+            return None
+        # I will get the instance of User class
+        # that have the wanted email
+        the_user = (User.search({"email": f"{user_email}"}))[0]
+        if not the_user.is_valid_password(user_pwd):
+            return None
+        else:
+            return the_user

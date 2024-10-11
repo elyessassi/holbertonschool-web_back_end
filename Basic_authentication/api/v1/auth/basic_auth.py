@@ -6,6 +6,7 @@ import binascii
 from typing import TypeVar
 from models.user import User
 
+
 class BasicAuth(Auth):
     """ basic method class"""
     def extract_base64_authorization_header(self,
@@ -55,6 +56,3 @@ class BasicAuth(Auth):
             # and after ':'
             return (decoded_base64_authorization_header[:index],
                     decoded_base64_authorization_header[index + 1:])
-
-
-        

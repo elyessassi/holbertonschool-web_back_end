@@ -4,6 +4,8 @@ from flask import request
 from typing import List
 from typing import TypeVar
 
+SESSION_NAME = "_my_session_id"
+
 
 class Auth():
     """ Authentication blueprint"""
@@ -33,3 +35,9 @@ class Auth():
     def current_user(self, request=None) -> TypeVar('User'):
         """ Method to check the current user """
         return None
+
+    def session_cookie(self, request=None):
+        """ Method to get session cookies"""
+        if request is None:
+            return None
+        return request.cookies.get(SESSION_NAME)

@@ -19,7 +19,7 @@ class SessionAuth(Auth):
         return sessionID
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
-        """ A method for retrieving user ID using 
+        """ A method for retrieving user ID using
             session ID"""
         if session_id is None:
             return None

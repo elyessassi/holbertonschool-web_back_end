@@ -2,6 +2,7 @@
 """ Session authentication module """
 from api.v1.auth.auth import Auth
 from uuid import uuid4
+from models.user import User
 
 
 class SessionAuth(Auth):
@@ -26,3 +27,11 @@ class SessionAuth(Auth):
         if not isinstance(session_id, str):
             return None
         return self.__class__.user_id_by_session_id.get(f"{session_id}")
+
+    def current_user(self, request=None):
+        """ A method that gets current user instance
+         by using session_cookie method and
+         user_id_by_session_id dictionnary"""
+        cookie_value = self.session_cookie(request)
+        userID = self.user_id_by_session_id[f"{cookie_value}"]
+        return User.get(userID)

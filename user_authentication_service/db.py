@@ -31,8 +31,9 @@ class DB:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
         return self.__session
-    
+
     def add_user(self, email: str, hashed_password: str) -> User:
         """ Method tha creates a user """
         self.users_number += 1
-        return User(id=self.users_number, email=email, hashed_password=hashed_password)
+        return User(id=self.users_number,
+                    email=email, hashed_password=hashed_password)

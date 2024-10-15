@@ -13,12 +13,11 @@ from user import Base
 class DB:
     """DB class
     """
-    users_number = 0
 
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db")
+        self._engine = create_engine("sqlite:///a.db", echo=True)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -34,9 +33,7 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """ Method tha creates a user """
-        self.users_number += 1
-        newUser = User(id=self.users_number,
-                       email=email, hashed_password=hashed_password)
+        newUser = User(email=email, hashed_password=hashed_password)
         newSession = self._session
         newSession.add(newUser)
         newSession.commit()

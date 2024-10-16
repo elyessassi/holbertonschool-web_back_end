@@ -3,10 +3,10 @@
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 
-base = declarative_base()
+Base = declarative_base()
 
 
-class User(base):
+class User(Base):
     """ User class that create the table users """
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)

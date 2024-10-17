@@ -9,7 +9,7 @@ app = flask.Flask(__name__)
 
 
 @app.route("/", method="GET")
-def main():
+def main() -> flask.Response:
     """ method that converts a dict into a JSON response
          and returns it
     """

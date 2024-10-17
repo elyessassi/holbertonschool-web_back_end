@@ -58,7 +58,7 @@ class DB:
         try:
             wantedUser = self.find_user_by(id=id)
             for key, value in kwargs.items():
-                wantedUser.key = value
+                setattr(wantedUser, key, value)
             newsession.commit()
         except AttributeError:
             raise ValueError

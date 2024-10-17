@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-
+"""
+    Creating a flask app and defining
+    routes
+"""
 import flask
 
 app = flask.Flask(__name__)
@@ -7,6 +10,9 @@ app = flask.Flask(__name__)
 
 @app.route("/", method="GET")
 def main():
+    """ method that converts a dict into a JSON response
+         and returns it
+    """
     return flask.jsonify({"message": "Bienvenue"})
 
 

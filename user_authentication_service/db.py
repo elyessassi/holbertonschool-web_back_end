@@ -55,8 +55,11 @@ class DB:
     def update_user(self, id: int, **kwargs) -> None:
         """ Method that updates a User data"""
         newsession = self._session
-        wantedUser = self.find_user_by(id=id)
-        for key, value in kwargs.items():
-            wantedUser.key = value
-        newsession.commit()
+        try:
+            wantedUser = self.find_user_by(id=id)
+            for key, value in kwargs.items():
+                wantedUser.key = value
+            newsession.commit()
+        except AttributeError:
+            raise ValueError
         return None

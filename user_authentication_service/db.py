@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import User
 from user import Base
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 
 
@@ -40,7 +40,7 @@ class DB:
         newSession.commit()
         return newUser
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         """Method that finds the wanted User
             using keyword arguments"""
         newSession = self._session

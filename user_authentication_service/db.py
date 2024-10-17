@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """DB module
 """
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import User
 from user import Base
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 
 
 class DB:
@@ -37,3 +39,12 @@ class DB:
         newSession.add(newUser)
         newSession.commit()
         return newUser
+
+    def find_user_by(self, **kwargs):
+        """Method that finds the wanted User
+            using keyword arguments"""
+        newSession = self._session
+        wantedUser = newSession.query(User).filter_by(**kwargs).first()
+        if wantedUser is None:
+            raise NoResultFound
+        return wantedUser

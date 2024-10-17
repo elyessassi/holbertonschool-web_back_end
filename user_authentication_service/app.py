@@ -4,7 +4,9 @@
     routes
 """
 import flask
+from auth import Auth
 
+AUTH = Auth()
 app = flask.Flask(__name__)
 
 
@@ -14,6 +16,20 @@ def main() -> flask.Response:
          and returns it
     """
     return flask.jsonify({"message": "Bienvenue"})
+
+
+@app.route("/users", methods=["POST"])
+def users():
+    """Method to register users using the Auth class method"""
+    email = flask.request.form.get("email")
+    password = flask.request.form.get("password")
+    try:
+        AUTH.register_user(email, password)
+    except ValueError:
+        return flask.jsonify({"message": "email already registered"})
+    else:
+        return flask.jsonify({"email": f"{email}", "message":
+                              "user created"}), 400
 
 
 if __name__ == "__main__":

@@ -44,7 +44,10 @@ class DB:
         """Method that finds the wanted User
             using keyword arguments"""
         newSession = self._session
-        wantedUser = newSession.query(User).filter_by(**kwargs).first()
-        if wantedUser is None:
-            raise NoResultFound
+        try:
+            wantedUser = newSession.query(User).filter_by(**kwargs).first()
+            if wantedUser is None:
+                raise NoResultFound
+        except AttributeError:
+            raise InvalidRequestError
         return wantedUser

@@ -61,5 +61,6 @@ class DB:
                 setattr(wantedUser, key, value)
             newsession.commit()
         except AttributeError:
+            newsession.rollback()
             raise ValueError
         return None

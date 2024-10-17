@@ -52,7 +52,7 @@ class DB:
             raise InvalidRequestError
         return wantedUser
 
-    def update_user(self, id: int, **kwargs) -> None:
+    def update_user(self, id: int, **kwargs):
         """ Method that updates a User data"""
         newsession = self._session
         try:

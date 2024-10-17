@@ -19,7 +19,7 @@ def main() -> flask.Response:
 
 
 @app.route("/users", methods=["POST"])
-def users() -> flask.Response:
+def users() -> flask.Response | int:
     """Method to register users using the Auth class method"""
     email = flask.request.form.get("email")
     password = flask.request.form.get("password")

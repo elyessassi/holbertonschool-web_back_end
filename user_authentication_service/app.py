@@ -19,7 +19,7 @@ def main() -> flask.Response:
 
 
 @app.route("/users", methods=["POST"])
-def users() -> flask.Response | int:
+def users() -> flask.Response:
     """Method to register users using the Auth class method"""
     email = flask.request.form.get("email")
     password = flask.request.form.get("password")
@@ -30,6 +30,23 @@ def users() -> flask.Response | int:
     else:
         return flask.jsonify({"email": f"{email}", "message":
                               "user created"}), 400
+
+
+@app.route("/sessions", methods=["POST"])
+def login() -> flask.Response:
+    """ Method that logs users in
+        (checks for credentials and
+        creates sessions)"""
+    email = flask.request.form.get("email")
+    password = flask.request.form.get("password")
+    theUser = AUTH.valid_login(email, password)
+    if theUser is False:
+        flask.abort(401)
+    theId = AUTH.create_session(email)
+    Response = flask.make_response()
+    Response.set_cookie("session_id", theId)
+    return flask.jsonify({"email": f"{email}", "message":
+                          "logged in"})
 
 
 if __name__ == "__main__":

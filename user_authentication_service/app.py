@@ -26,10 +26,10 @@ def users() -> flask.Response:
     try:
         AUTH.register_user(email, password)
     except ValueError:
-        return flask.jsonify({"message": "email already registered"})
+        return flask.jsonify({"message": "email already registered"}), 400
     else:
         return flask.jsonify({"email": f"{email}", "message":
-                              "user created"}), 400
+                              "user created"}), 200
 
 
 @app.route("/sessions", methods=["POST"])

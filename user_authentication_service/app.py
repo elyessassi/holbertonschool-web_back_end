@@ -46,14 +46,13 @@ def login() -> flask.Response:
     Response = flask.make_response(flask.jsonify({"email": f"{email}",
                                                   "message":
                                                   "logged in"}))
-    print(theId)
     Response.set_cookie("session_id", theId)
     return Response
 
 
 @app.route("/sessions", methods=["DELETE"])
 def logout() -> None:
-    
+    """Method used to logout the user"""
     SessionID = flask.request.cookies.get("session_id")
     theUser = AUTH.get_user_from_session_id(SessionID)
     if theUser is None:
@@ -65,4 +64,4 @@ def logout() -> None:
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000" ,debug=True)
+    app.run(host="0.0.0.0", port="5000")

@@ -9,6 +9,7 @@ from user import User
 from user import Base
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
+import bcrypt
 
 
 class DB:
@@ -52,14 +53,14 @@ class DB:
             raise InvalidRequestError
         return wantedUser
 
-    def update_user(self, id: int, **kwargs):
+    def update_user(self, id: int, **kwargs) -> None:
         """ Method that updates a User data"""
         newsession = self._session
         try:
             wantedUser = self.find_user_by(id=id)
             for key, value in kwargs.items():
                 setattr(wantedUser, key, value)
-            newsession.commit()
         except AttributeError:
             raise ValueError
+        newsession.commit()
         return None

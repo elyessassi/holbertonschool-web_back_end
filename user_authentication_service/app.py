@@ -50,5 +50,16 @@ def login() -> flask.Response:
     return Response
 
 
+@app.route("/sessions", methods=["DELETE"])
+def logout() -> None:
+    SessionID = flask.request.cookies.get("session_id")
+    theUser = AUTH.get_user_from_session_id(SessionID)
+    if theUser is None:
+        flask.abort(403)
+    else:
+        AUTH.destroy_session(theUser.id)
+        return flask.redirect(flask.url_for('/'))
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")

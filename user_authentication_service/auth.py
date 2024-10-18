@@ -9,6 +9,7 @@ from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
 import uuid
+from sqlalchemy.exc import InvalidRequestError
 
 
 def _hash_password(password: str) -> bytes:
@@ -60,3 +61,14 @@ class Auth:
             theUser.session_id = theId
             self._db._session.commit()
         return theId
+
+    def get_user_from_session_id(self, session_id: str) -> User | None:
+        """ method that gets user by session_id """
+        try:
+            theUser = self._db.find_user_by(session_id=session_id)
+        except NoResultFound:
+            return None
+        except InvalidRequestError:
+            return None
+        else:
+            return theUser

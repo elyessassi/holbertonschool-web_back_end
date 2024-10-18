@@ -59,8 +59,11 @@ class DB:
         try:
             wantedUser = self.find_user_by(id=id)
             for key, value in kwargs.items():
-                setattr(wantedUser, key, value)
-        except AttributeError:
+                if not hasattr(wantedUser, key):
+                    raise ValueError
+                else:
+                    setattr(wantedUser, key, value)
+                    newsession.commit()
+        except ValueError:
             raise ValueError
-        newsession.commit()
         return None

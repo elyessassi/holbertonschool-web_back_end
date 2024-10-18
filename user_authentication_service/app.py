@@ -43,10 +43,11 @@ def login() -> flask.Response:
     if theUser is False:
         flask.abort(401)
     theId = AUTH.create_session(email)
-    Response = flask.make_response()
+    Response = flask.make_response(flask.jsonify({"email": f"{email}",
+                                                  "message":
+                                                  "logged in"}))
     Response.set_cookie("session_id", theId)
-    return flask.jsonify({"email": f"{email}", "message":
-                          "logged in"})
+    return Response
 
 
 if __name__ == "__main__":

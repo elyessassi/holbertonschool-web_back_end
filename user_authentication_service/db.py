@@ -53,11 +53,11 @@ class DB:
             raise InvalidRequestError
         return wantedUser
 
-    def update_user(self, id: int, **kwargs) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """ Method that updates a User data"""
         newsession = self._session
         try:
-            wantedUser = self.find_user_by(id=id)
+            wantedUser = self.find_user_by(id=user_id)
             for key, value in kwargs.items():
                 if not hasattr(wantedUser, key):
                     raise ValueError

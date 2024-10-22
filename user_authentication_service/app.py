@@ -56,11 +56,20 @@ def logout() -> None:
     SessionID = flask.request.cookies.get("session_id")
     theUser = AUTH.get_user_from_session_id(SessionID)
     if theUser is None:
-        print("hello")
         flask.abort(403)
     else:
         AUTH.destroy_session(theUser.id)
         return flask.redirect('/')
+
+
+@app.route("/profile", methods=["GET"])
+def profile() -> None:
+    SessionID = flask.request.cookies.get("session_id")
+    theUser = AUTH.get_user_from_session_id(SessionID)
+    if theUser is None:
+        flask.abort(403)
+    return flask.Response({"email": f"{theUser.email}"}), 200
+
 
 
 if __name__ == "__main__":

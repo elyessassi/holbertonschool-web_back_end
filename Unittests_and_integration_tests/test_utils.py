@@ -2,7 +2,7 @@
 """Test file for utils.py"""
 import unittest
 from parameterized import parameterized
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 from unittest.mock import patch, MagicMock
 
 
@@ -42,3 +42,27 @@ class TestGetJson(unittest.TestCase):
         get_json(url)
         mocked_get_request.assert_called_once_with(url)
         self.assertEqual(mocked_get_request.json(), payload)
+
+
+class TestMemoize(unittest.TestCase):
+    """ class to test utils.memoize method"""
+    def test_memoize(self):
+        """Method to test the memoize method"""
+        class TestClass:
+            """ Class for testing """
+
+            def a_method(self):
+                """ testing method """
+                return 42
+
+            @memoize
+            def a_property(self):
+                """ method to test memoize on """
+                return self.a_method()
+
+        with patch.object(TestClass, "a_method",
+                          return_value=42) as mocked_a_method:
+            x = TestClass()
+            x.a_property
+            x.a_property
+            mocked_a_method.assert_called_once()

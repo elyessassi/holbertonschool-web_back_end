@@ -51,12 +51,12 @@ class TestMemoize(unittest.TestCase):
         class TestClass:
             """ Class that has methods used to test memoization """
 
-            def a_method(self):
+            def a_method(self) -> int:
                 """ a simple method that returns 42 """
                 return 42
 
             @memoize
-            def a_property(self):
+            def a_property(self) -> a_method:
                 """ method to test memoize on """
                 return self.a_method()
 

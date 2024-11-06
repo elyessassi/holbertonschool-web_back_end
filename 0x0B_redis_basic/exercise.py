@@ -2,7 +2,7 @@
 """Module that implements Redis"""
 import redis
 import uuid
-from typing import Union, Callable
+from typing import Union, Callable, Optional
 
 
 class Cache():
@@ -30,7 +30,7 @@ class Cache():
         return value
 
     def get(self, key: str,
-            fn: Callable[[bytes], int | str] = None) -> int | str:
+            fn: Optional[Callable[[bytes], int | str]] = None) -> int | str:
         """ a Method that convertes value returned by
             redis to int or string depending
             on the arguments """

@@ -30,7 +30,7 @@ class Cache():
         return value
 
     def get(self, key: str,
-            fn: Optional[Callable[[bytes], int | str]] = None) -> int | str:
+            fn: Optional[Callable[[bytes], Union[int, str]]] = None) -> Union[int, str]:
         """ a Method that convertes value returned by
             redis to int or string depending
             on the arguments """

@@ -3,6 +3,18 @@
 import redis
 import uuid
 from typing import Union, Callable, Optional
+from functools import wraps
+
+
+def count_calls(func):
+
+    @wraps(func)
+    def wrapper(self, *args):
+
+        self._redis.incr(func.__qualname__)
+        func(self, *args)
+
+    return wrapper
 
 
 class Cache():
@@ -12,6 +24,7 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """ Method that stores data as a value of
             of a randomly generated key """
@@ -30,7 +43,8 @@ class Cache():
         return value
 
     def get(self, key: str,
-            fn: Optional[Callable[[bytes], Union[int, str]]] = None) -> Union[int, str]:
+            fn: Optional[Callable[[bytes],
+                         Union[int, str]]] = None) -> Union[int, str]:
         """ A Method that convertes value returned by
             redis to int or string depending
             on the arguments """

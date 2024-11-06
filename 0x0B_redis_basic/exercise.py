@@ -12,11 +12,11 @@ def count_calls(func: Callable[..., Any]) -> Callable[..., Any]:
     def wrapper(self, *args: Any) -> Any:
         """ Wrapper function """
         self._redis.incr(func.__qualname__)
-        func(self, *args)
+        return func(self, *args)
 
     return wrapper
 
-#def call_history(func: Callable[..., Any]) -> Callable[..., Any]:
+# def call_history(func: Callable[..., Any]) -> Callable[..., Any]:
 #    """ decorator used to store inputs and outputs """
 #    @wraps(func)
 #    def wrapper(self, *args: Any) -> Any:
@@ -24,7 +24,7 @@ def count_calls(func: Callable[..., Any]) -> Callable[..., Any]:
 #        self._redis.lpush(f"{func}:inputs", str(*args))
 #        op = func(self, *args)
 #        self._redis.lpush(f"{func}:outputs", str(op))
-#    
+#
 #    return wrapper
 
 
@@ -35,8 +35,7 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-
-    @call_history
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """ Method that stores data as a value of
             of a randomly generated key """

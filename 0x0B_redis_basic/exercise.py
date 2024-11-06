@@ -2,12 +2,12 @@
 """Module that implements Redis"""
 import redis
 import uuid
-from typing import Union, Callable, Optional
+from typing import Union, Callable, Optional, Any
 from functools import wraps
 
 
-def count_calls(func):
-
+def count_calls(func: Callable[..., Any]) -> Callable[..., Any]:
+    """ Decorator used to count calls """
     @wraps(func)
     def wrapper(self, *args):
 

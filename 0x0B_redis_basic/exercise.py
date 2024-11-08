@@ -6,25 +6,25 @@ from typing import Union, Callable, Optional, Any
 from functools import wraps
 
 
-def count_calls(func: Callable[..., Any]) -> Callable[..., Any]:
+def count_calls(method: Callable[..., Any]) -> Callable[..., Any]:
     """ Decorator used to count calls """
-    @wraps(func)
+    @wraps(method)
     def wrapper(self, *args: Any) -> Any:
         """ Wrapper function """
-        self._redis.incr(func.__qualname__)
-        return func(self, *args)
+        self._redis.incr(method.__qualname__)
+        return method(self, *args)
 
     return wrapper
 
 
-def call_history(func: Callable[..., Any]) -> Callable[..., Any]:
+def call_history(method: Callable[..., Any]) -> Callable[..., Any]:
     """ decorator used to store inputs and outputs """
-    @wraps(func)
+    @wraps(method)
     def wrapper(self, *args: Any) -> Any:
         """ Wrapper function """
-        self._redis.rpush(f"{func.__qualname__}:inputs", str(args))
-        op = func(self, *args)
-        self._redis.rpush(f"{func.__qualname__}:outputs", str(op))
+        self._redis.rpush(f"{method.__qualname__}:inputs", str(args))
+        op = method(self, *args)
+        self._redis.rpush(f"{method.__qualname__}:outputs", str(op))
         return op
 
     return wrapper

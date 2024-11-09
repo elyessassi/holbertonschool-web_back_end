@@ -67,3 +67,15 @@ class Cache():
             return fn(get_value)
         else:
             return get_value
+
+
+def replay(method: Callable[..., Any]) -> None:
+    cacheobj = method.__self__
+    length = cacheobj.get(method.__qualname__, cacheobj.get_int)
+    inputs = cacheobj._redis.lrange(f"{method.__qualname__}:inputs", 0, -1)
+    outputs = cacheobj._redis.lrange(f"{method.__qualname__}:outputs", 0, -1)
+    zipped = zip(inputs, outputs)
+    IOlist = list(zipped)
+    print(f"Cache.store was called {length} times:")
+    for i in range(length):
+        print(f"Cache.store(*{IOlist[i][0].decode()}) -> {IOlist[i][1]}")

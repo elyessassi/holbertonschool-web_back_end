@@ -68,7 +68,7 @@ class Cache():
             return get_value
 
 
-def replay(method: Callable) -> None:
+def replay(method: Callable):
     cacheobj = method.__self__
     length = cacheobj.get(method.__qualname__, cacheobj.get_int)
     inputs = cacheobj._redis.lrange(f"{method.__qualname__}:inputs", 0, -1)

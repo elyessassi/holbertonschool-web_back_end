@@ -6,7 +6,7 @@ from typing import Union, Callable, Optional, Any
 from functools import wraps
 
 
-def count_calls(method: Callable[..., Any]) -> Callable[..., Any]:
+def count_calls(method: Callable) -> Callable:
     """ Decorator used to count calls """
     @wraps(method)
     def wrapper(self, *args: Any) -> Any:
@@ -17,7 +17,7 @@ def count_calls(method: Callable[..., Any]) -> Callable[..., Any]:
     return wrapper
 
 
-def call_history(method: Callable[..., Any]) -> Callable[..., Any]:
+def call_history(method: Callable) -> Callable:
     """ decorator used to store inputs and outputs """
     @wraps(method)
     def wrapper(self, *args: Any) -> Any:
@@ -57,8 +57,7 @@ class Cache():
         return value
 
     def get(self, key: str,
-            fn: Optional[Callable[[bytes],
-                         Union[int, str]]] = None) -> Union[int, str]:
+            fn: Optional[Callable] = None) -> Union[int, str]:
         """ A Method that convertes value returned by
             redis to int or string depending
             on the arguments """
@@ -69,7 +68,7 @@ class Cache():
             return get_value
 
 
-def replay(method: Callable[..., Any]) -> None:
+def replay(method: Callable) -> None:
     cacheobj = method.__self__
     length = cacheobj.get(method.__qualname__, cacheobj.get_int)
     inputs = cacheobj._redis.lrange(f"{method.__qualname__}:inputs", 0, -1)

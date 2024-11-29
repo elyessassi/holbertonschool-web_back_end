@@ -6,7 +6,7 @@ function handleResponseFromAPI(promise) {
   },
   () => {
     console.log('Got a response from the API');
-    return new Error();
+    return new Error;
   });
 }
 

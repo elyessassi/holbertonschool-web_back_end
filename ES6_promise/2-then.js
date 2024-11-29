@@ -4,10 +4,12 @@ function handleResponseFromAPI(promise) {
     console.log('Got a response from the API');
     return (obj);
   },
+).catch(
   () => {
     console.log('Got a response from the API');
     return new Error;
-  });
+  }
+);
 }
 
 export default handleResponseFromAPI;

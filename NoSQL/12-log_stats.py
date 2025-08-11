@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
+""" show stats about Nginx logs """
 
 from pymongo import MongoClient
+
+""" show stats about Nginx logs """
 
 client = MongoClient('mongodb://127.0.0.1:27017')
 

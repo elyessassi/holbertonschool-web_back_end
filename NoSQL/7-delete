@@ -1,2 +1,2 @@
 // deleting a document
-db.school.deleteOne({ name : "Holberton School" })
+db.version()

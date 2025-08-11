@@ -19,11 +19,11 @@ def get_stats():
     print(f"{collection.count_documents({})} logs")
 
     print("Methods:")
-    print(f"    method GET: {collection.count_documents(get_filter)}")
-    print(f"    method POST: {collection.count_documents(post_filter)}")
-    print(f"    method PUT: {collection.count_documents(put_filter)}")
-    print(f"    method PATCH: {collection.count_documents(patch_filter)}")
-    print(f"    method DELETE: {collection.count_documents(delete_filter)}")
+    print(f"\tmethod GET: {collection.count_documents(get_filter)}")
+    print(f"\tmethod POST: {collection.count_documents(post_filter)}")
+    print(f"\tmethod PUT: {collection.count_documents(put_filter)}")
+    print(f"\tmethod PATCH: {collection.count_documents(patch_filter)}")
+    print(f"\tmethod DELETE: {collection.count_documents(delete_filter)}")
     filter = {"method": "GET", "path": "/status"}
     print(f"{collection.count_documents(filter)} status check")
 
